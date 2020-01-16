@@ -54,7 +54,7 @@ console.log(findRequest(12));
 
 function printDistroLinuxPopularity(number, label) {
     let numberString = String(number);
-    while (numberString.length <= 3) {
+    while (numberString.length < 3) {
         numberString = "0" + numberString;
     }
     console.log(`${numberString} ${label}`);
