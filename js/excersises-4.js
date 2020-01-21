@@ -56,8 +56,117 @@ Las matrices tienen un reverse método que cambia la matriz al invertir el orden
 Pensando en las notas sobre los efectos secundarios y las funciones puras en el capítulo anterior , ¿qué variante espera que sea útil en más situaciones? ¿Cuál corre más rápido?
 */
 
-let numOne = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-console.log(numOne);
-console.log(numOne.reverse());
+let numOne = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+function reverseArray(arr) {
+  let localArray = [];
+  for(let i =0; i < arr.length; i++) {
+    localArray.unshift(arr[i]);
+  }
+
+  return console.log(localArray);
+}
 
 
+function reverseArray2(array) {
+  let output = [];
+  for (let i = array.length - 1; i >= 0; i--) {
+    output.push(array[i])
+  }
+
+  return console.log(output);
+}
+// reverseArray2(numOne);
+
+//-----ARRAY AL REVES-----
+
+
+function reverseArrayInPlace(arr) {
+  for (let i = 0; i < Math.floor(arr.length / 2); i++) {
+    let old = arr[i];
+    arr[i] = arr[arr.length - 1 - i];
+    arr[arr.length - 1 - i] = old;
+  }
+  return console.log(arr);
+}
+// reverseArrayInPlace(numOne);
+
+
+//---CREACION DE JSON---------//
+
+let newJson = 
+{
+  "nombre" : "Pablo",
+  "edad" : 27,
+  "apellidos" : {
+    "paterno" : "Hernandez",
+    "materno" : "Vizcarra"
+  },
+  "intereses" : [
+    "Programar",
+    "Ciclismo"
+  ]
+}
+
+// let dat = JSON.stringify(newJson);
+// console.log(dat);
+
+// dat = JSON.parse(dat)
+// console.log(dat);
+
+let newUsers =[
+
+  {
+    "name" : "Pablo",
+    "sex" : "Masculino"
+  },
+  {
+    "name" : "Lucero",
+    "sex" : "Femenino"
+  },
+  {
+    "name" : "Thiago",
+    "sex" : "Masculino"
+  },
+  {
+    "name" : "Yara",
+    "sex" : "Femenino"
+  },
+  {
+    "name" : "Andrea",
+    "sex" : "Femenino"
+  },
+];
+
+function printUsers(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i].sex);
+  }
+}
+
+// printUsers(newUsers);
+
+//---EXCERSISE 3---
+/*
+Escriba una función arrayToList que construya una estructura de lista como la que se muestra cuando se da [1, 2, 3]como argumento. También escriba una listToArray función que produzca una matriz a partir de una lista. Luego agregue una función auxiliar prepend, que toma un elemento y una lista y crea una nueva lista que agrega el elemento al frente de la lista de entrada, y nth que toma una lista y un número y devuelve el elemento en la posición dada en la lista (con cero refiriéndose al primer elemento) o undefined cuando no existe tal elemento.
+
+Si aún no lo ha hecho, también escriba una versión recursiva de nth.
+*/
+const ArrayToList = (num1, num2, num3) => {
+  return console.log(JSON.stringify({
+    "value" : num1,
+    "rest" : {
+      "value" : num2,
+      "rest" : num3
+    },
+  }));
+}
+
+let newLocal = ArrayToList(1, 2, 3); 
+
+function listToArray (call){
+  let localArray = [];
+  localArray.push(call.value);
+  return console.log(localArray);
+}
+listToArray(newLocal);
