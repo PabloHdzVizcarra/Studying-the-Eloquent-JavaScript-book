@@ -152,21 +152,77 @@ Escriba una función arrayToList que construya una estructura de lista como la q
 
 Si aún no lo ha hecho, también escriba una versión recursiva de nth.
 */
-const ArrayToList = (num1, num2, num3) => {
-  return console.log(JSON.stringify({
-    "value" : num1,
-    "rest" : {
-      "value" : num2,
-      "rest" : num3
-    },
-  }));
+
+function arrayToPokemon(arr) {
+  let list = null;
+  for (let i = arr.length - 1; i >= 0; i--) {
+    list = {pokemon: arr[i], rest: list};
+  }
+  return list;
+}
+// console.log(JSON.stringify(arrayToPokemon(['Charizard', 'Pikachu', 'Diglett'])));
+
+function listPokemon(list) {
+  
+  let array = [];
+  for (let node = list; node; node = node.rest) {
+    array.push(node.pokemon);
+  }
+  return array;
+}
+// console.log(listPokemon(arrayToPokemon(["Charizard", "Totodile", "Chikorita"])));
+
+function prependPokemon(pokemon, list) {
+  return {pokemon, rest: list};
+}
+// console.log(prependPokemon('MewTwo', arrayToPokemon(['Celebi', 'Lugia', 'Ho-Oh'])));
+// console.log(prependPokemon(JSON.stringify('MewTwo', arrayToPokemon(['Celebi', 'Lugia', 'Ho-Oh']))));
+
+function nth(list, n) {
+  if (!list) return undefined;
+  else if (n == 0) return list.pokemon;
+  else return nth(list.rest, n-1);
 }
 
-let newLocal = ArrayToList(1, 2, 3); 
+// console.log(nth(arrayToPokemon(['Charizard', 'Pikachu', 'Diglett']), 1));
 
-function listToArray (call){
-  let localArray = [];
-  localArray.push(call.value);
-  return console.log(localArray);
+//-----Excersise 4-----
+/*
+Escriba una función deepEqual que tome dos valores y devuelva verdadero solo si son el mismo valor o son objetos con las mismas propiedades, donde los valores de las propiedades son iguales en comparación con una llamada recursiva a deepEqual.
+
+Para saber si los valores deben compararse directamente (use el ===operador para eso) o comparar sus propiedades, puede usar el typeofoperador. Si produce "object"ambos valores, debe hacer una comparación profunda. Pero hay que tener en cuenta una tonta excepción: a causa de un accidente histórico, typeof nulltambién produce "object".
+
+La Object.keysfunción será útil cuando necesite revisar las propiedades de los objetos para compararlos.
+*/
+let distroUbuntu = {
+  distro : 'Ubuntu',
+  deskpot : 'Gnome',
+  version : 19.10
+};
+console.log(Object.keys(distroUbuntu));
+
+let ubuntu = {here: {is: "an"}, object: 2};
+
+
+function deepEqual(a, b) {
+  if (a === b) {
+    return true;
+  }
+  if (a == null || typeof a != 'object' ||
+      b == null || typeof b != 'object') {
+    return false;
+  }
+  let keysA = Object.keys(a), keysB = Object.keys(b);
+  if (keysA.length != keysB.length) {
+    return false;
+  }
+  for (let key of keysA) {
+    if (!keysB.includes(key) || !deepEqual(a[key])) {
+      return false;
+    }
+  }
+  return true;
 }
-listToArray(newLocal);
+
+console.log(deepEqual(ubuntu, ubuntu));
+console.log(deepEqual(ubuntu, {here: {is: "an"}, object: 2}));
