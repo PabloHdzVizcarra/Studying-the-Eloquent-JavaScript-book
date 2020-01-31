@@ -1876,9 +1876,112 @@ var SCRIPTS = [
   }
 ];
 
+const LINUX = [
+  {
+    name: 'Ubuntu',
+    year: 2004,
+    deskpot: 'Gnome',
+    boss: 'Canonical'
+  },
+  {
+    name: 'Debian',
+    year: 1993,
+    deskpot: 'Any',
+    boss: 'Comunity'
+  },
+  {
+    name: 'Fedora',
+    year: 2003,
+    deskpot: 'Gnome',
+    boss: 'Red Hat'
+  },
+  {
+    name: 'Arch Linux',
+    year: 2002,
+    deskpot: 'Any',
+    boss: 'Judd Vinet'
+  },
+  {
+    name: 'OpenSuse',
+    year: 2005,
+    deskpot: 'KDE Plasma',
+    boss: 'SUSE Linux'
+  },
+  {
+    name: 'Mandriva',
+    year: 1998,
+    deskpot: 'KDE Plasma',
+    boss: 'Mandriva'
+  },
+  {
+    name: 'Gentoo',
+    year: 2002,
+    deskpot: 'Any',
+    boss: 'Daniel Robbins'
+  },
+
+]
+let POKEMON =
+[
+    {
+        name: 'Bulbasaur',
+        type: 'Plant',
+        color: 'Green',
+        number: 1
+    },
+    {
+        name: 'Charmander',
+        type: 'Fire',
+        color: 'Red',
+        number: 4
+    },
+    {
+        name: 'Squirtle',
+        type: 'Water',
+        color: 'Blue',
+        number: 7
+    },
+    {
+        name: 'Chikorita',
+        type: 'Plant',
+        color: 'Green',
+        number: 152
+    },
+    {
+        name: 'Cyndaquil',
+        type: 'Fire',
+        color: 'Red',
+        number: 155
+    },
+    {
+        name: 'Totodile',
+        type: 'Water',
+        color: 'Blue',
+        number: 158
+    },
+    {
+        name: 'Trecko',
+        type: 'Plant',
+        color: 'Green',
+        number: 252
+    },
+    {
+        name: 'Torchic',
+        type: 'Fire',
+        color: 'Red',
+        number: 255
+    },
+    {
+        name: 'Mudkip',
+        type: 'Water',
+        color: 'Blue',
+        number: 258
+    },
+
+]
 //-----EXCERSISES-----
 
-function filter(array, test) {
+function filtro(array, test) {
     let passed = [];
     for(let element of array) {
         if (test(element)) {
@@ -1887,6 +1990,67 @@ function filter(array, test) {
     }
     return passed;
 }
-console.log(filter(SCRIPTS, script => script.living));
+console.log(filtro(SCRIPTS, script => script.living));
 
 
+function mapa(array, transform) {
+    let mapped = [];
+    for(let element of array) {
+        mapped.push(transform(element));
+    }
+    return mapped;
+}
+let rtlScript = SCRIPTS.filter(s => s.direction == 'rtl');
+console.log(mapa(rtlScript, s => s.name));
+
+
+function mapPokemon(listPokemon, transform) {
+    let listNew = [];
+    for (const element of listPokemon) {
+        listNew.push(transform(element));
+    }
+}
+
+let pokemonFire = POKEMON.filter(p => p.type === 'Fire')
+                            .map(p => p.name);
+// console.log(map(pokemonFire, p => p.name));
+console.log(pokemonFire);
+
+//__________________________________________________________
+
+function reducir(array, combine, start) {
+    let current = start;
+    for(const element of array) {
+        current = combine(current, element);
+    }
+    return current;
+}
+console.log(reducir([1, 2, 3, 4, 5], (a, b) => a + b, 0));
+
+//__________________________________________________________
+
+function characterCount(script) {
+    return script.ranges.reduce((count, [from, to]) => {
+        return count + (to - from);
+    }, 0);
+}
+console.log(SCRIPTS.reduce((a, b) => {
+    return characterCount(a) < characterCount(b) ? b:a;
+}));
+
+//----------------------------------------------------------
+
+function characterScript(code) {
+  for (let script of SCRIPTS) {
+    if (script.ranges.some(([from, to]) => {
+      return code >= from && code < to;
+    })){
+      return script;
+    }
+  }
+  return null;
+}
+
+console.log(characterScript(120));
+
+// 0.1------------------------------------------------------
